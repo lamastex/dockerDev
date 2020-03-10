@@ -26,3 +26,17 @@ c6a23f3d17cb        lamastex/dockerdev:latest   "/bin/bash"         3 seconds ag
 
 $ docker exec -it spark-gdelt /bin/bash
 ```
+
+## Compile and Play
+
+```
+$ mvn verify
+
+$ cp target/spark-gdelt-2.1-SNAPSHOT.jar ../spark-2.4.4-bin-hadoop2.7/jars/
+$ spark-shell
+```
+Or
+
+```
+$ spark-shell --jars target/spark-gdelt-2.1-SNAPSHOT.jar
+```
