@@ -18,7 +18,7 @@ Run a docker container for the project as daemon and execute into it with bash.
 $ pwd
 ~/all/git/
 
-$ docker run --rm -d -it --name=spark-gdelt --mount type=bind,source=${PWD},destination=/root/GIT lamastex/dockerdev:latest 
+$ docker run --rm -d -it --name=spark-gdelt --mount type=bind,source=${PWD},destination=/root/GIT -p 4040:4040 lamastex/dockerdev:latest
 
 $ docker ps
 CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS              PORTS               NAMES
