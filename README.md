@@ -1,5 +1,5 @@
 # dockerDev
-Dockerized Development Environment for Spark+Scala+mvn+...
+Dockerized Development Environment for Spark+Scala+mvn/sbt+...
 
 This is currently being developed for:
  
@@ -79,7 +79,7 @@ scala>
 
 # Stopping or starting the container
 
-When you want to stop or start the container just do `docker stop spark-gdelt` or `docker start spark-gdelt` and then `docker exec -it spark-gdelt /bin/bash' to get inside the running container.
+When you want to stop or start the container just do `docker stop spark-gdelt` or `docker start spark-gdelt` and then `docker exec -it spark-gdelt /bin/bash` to get inside the running container.
 
 Note that `docker kill` will stop and remove the container. See `docker help` for more details.
 
