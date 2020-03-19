@@ -1,5 +1,5 @@
 # dockerDev
-Dockerized Development Environment for Raaz's
+Dockerized Development Environment for Spark+Scala+mvn+...
 
 This is currently being developed for:
  
