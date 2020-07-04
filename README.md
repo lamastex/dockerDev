@@ -83,3 +83,47 @@ When you want to stop or start the container just do `docker stop spark-gdelt` o
 
 Note that `docker kill` will stop and remove the container. See `docker help` for more details.
 
+# Commiting mvn downloads to a container
+
+This is useful if you don't want to keep downloading from mvn when pom/xml is fixed for dev cycle.
+
+```
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:45 min
+[INFO] Finished at: 2020-07-04T14:11:03Z
+[INFO] ------------------------------------------------------------------------
+root@bb0d1714cde9:~/GIT/spark-gdelt# exit
+$ ls
+aamend                                 dockerDev            mob-spark              spark-gdelt
+apache                                 emm-newsbrief-rvest  mrs2                   tilowiklund
+computational-statistical-experiments  lamastex.github.io   private
+distributed-histogram-trees            magellan             scalable-data-science
+
+$ docker ps
+CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS              PORTS                    NAMES
+bb0d1714cde9        lamastex/dockerdev:latest   "/bin/bash"         23 minutes ago      Up 23 minutes       0.0.0.0:4040->4040/tcp   spark-gdelt
+raaz@raaz-ThinkPad-T480:~/all/git$ docker ps
+CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS              PORTS                    NAMES
+bb0d1714cde9        lamastex/dockerdev:latest   "/bin/bash"         27 minutes ago      Up 27 minutes       0.0.0.0:4040->4040/tcp   spark-gdelt
+
+$ docker commit spark-gdelt lamastex/dockerdev:20200407-spark-gdelt
+sha256:3132086a46e04316fb280df9f31d6f975d53ebd637edeaa5ad6a686dfd058c29
+
+$ docker images
+REPOSITORY           TAG                    IMAGE ID            CREATED             SIZE
+lamastex/dockerdev   20200407-spark-gdelt   3132086a46e0        12 seconds ago      1.54GB
+lamastex/dockerdev   latest                 9dd569021915        35 minutes ago      1.27GB
+ubuntu               18.04                  8e4ce0a6ce69        2 weeks ago         64.2MB
+hello-world          latest                 bf756fb1ae65        6 months ago        13.3kB
+
+$ docker kill spark-gdelt
+spark-gdelt
+
+$ docker run --rm -it --mount type=bind,source=${PWD},destination=/root/GIT -p 4040:4040 lamastex/dockerdev:20200407-spark-gdelt
+
+root@9f2b5d6cb084:~# cd GIT/spark-gdelt/
+
+root@9f2b5d6cb084:~/GIT/spark-gdelt# mvn verify # should proceed from the cached jars
+```
