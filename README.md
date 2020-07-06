@@ -127,3 +127,15 @@ root@9f2b5d6cb084:~# cd GIT/spark-gdelt/
 
 root@9f2b5d6cb084:~/GIT/spark-gdelt# mvn verify # should proceed from the cached jars
 ```
+
+Note that if you run the container as above then you have to change the port on the host-side to have multiple running containers. 
+This is useful sometimes. Alternatively, you can run the container in daemon mode as follows.
+
+If you want to launch in deamon mode with a name and execute into the same running container with  a name then do:
+
+```
+docker run --rm -it -d --name=20200407-spark-gdelt --mount type=bind,source=${PWD},destination=/root/GIT -p 4040:4040 lamastex/dockerdev:20200407-spark-gdelt
+```
+
+Note that if you do not use `--rm` flag then the docker container will not be removed when you exit the container.
+
