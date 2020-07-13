@@ -139,3 +139,22 @@ docker run --rm -it -d --name=20200407-spark-gdelt --mount type=bind,source=${PW
 
 Note that if you do not use `--rm` flag then the docker container will not be removed when you exit the container.
 
+# Python docker dev environment
+
+This `Dockerfile-py` is for python dev environemnt for the following packages:
+
+- yfinance
+- histdata
+
+To Use:
+
+```
+docker pull lamastex/python-findata
+docker run --rm  -it --mount type=bind,source=${PWD},destination=/root/GIT lamastex/python-findata /bin/bash
+```
+
+To Build:
+
+```
+docker build -t lamastex/python-findata -f python-findata.Dockerfile .
+```
