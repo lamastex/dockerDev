@@ -206,4 +206,5 @@ ctrl-b d  # for detach
 ctrl-b c  # to create a new window (much better than creating a new tab in shell even when working locally without tmux)
 ctrl-b x  # to delete
 ctrl-b l  # to switch to the previous window - very useful for laternating between two windows in a tmux session 
+ctrl-b [  # to be able to scroll using arrow keys within the window - especially non-visible history of commands and output in window
 ```
