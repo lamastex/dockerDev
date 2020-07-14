@@ -1,9 +1,19 @@
 # dockerDev
 Dockerized Development Environment for Spark+Scala+mvn/sbt+...
 
-This is currently being developed for:
- 
- - https://github.com/aamend/spark-gdelt 
+This is currently being developed for various projects involving Spark, Scala, R, Python, etc.
+
+Some concrete open-source projects using these docker containers that are avialable directly dockerhub at:
+
+- https://hub.docker.com/u/lamastex
+
+include:
+
+- https://github.com/aamend/spark-gdelt 
+- https://github.com/lamastex/spark-gdelt 
+- https://github.com/lamastex/emm-newsbrief-rvest
+- https://github.com/lamastex/spark-trend-calculus
+- etc.
 
 ## Build
 
