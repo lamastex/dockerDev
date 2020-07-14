@@ -158,3 +158,42 @@ To Build:
 ```
 docker build -t lamastex/python-findata -f python-findata.Dockerfile .
 ```
+
+
+# Using tmux is recommended
+
+When connecting via ssh and working in a running ec2 instance or in a local Linux/Mac machine, it is best to use tmux.
+
+```
+man tmux
+```
+
+For example, you can ssh into a ec2 instance or even to any local Linux/Mac machine, using tmux.
+
+Here are some of the most basic commands you will need:
+
+```
+# list all tmux sessions in a machine:
+
+ubuntu@ip-xxx-xx-xx-xxx:~$ tmux list-sessions
+0: 4 windows (created Mon Jul 13 20:35:07 2020) [255x66]
+
+# attach to a session it is session numbered 0 here
+
+ubuntu@ip-xxx-xx-xx-xxx:~$ tmux attach -t 0
+
+# Note all tmux commands are preceded by ctrl-b, where ctrl-b is <ctrl> ans 'b' pressed together)
+
+# you can detach from a session and reattach by ssh-ing in later to the same session
+
+ctrl-b d
+[detached (from session 0)]
+ubuntu@xx-xxx-xx-xx-xxx:~$ 
+
+# some basic tmux commands, all preceded by ctrl-b, where ctrl-b is <ctrl> ans 'b' pressed together)
+ctrl-b 1  # for switching to a new window within the session labelled 1 (or 2, 3, etc if more windows were created)
+ctrl-b d  # for detach
+ctrl-b c  # to create a new window (much better than creating a new tab in shell even when working locally without tmux)
+ctrl-b x  # to delete
+ctrl-b l  # to switch to the previous window - very useful for laternating between two windows in a tmux session 
+```
