@@ -198,9 +198,19 @@ Here are some of the most basic commands you will need:
 ubuntu@ip-xxx-xx-xx-xxx:~$ tmux list-sessions
 0: 4 windows (created Mon Jul 13 20:35:07 2020) [255x66]
 
+# to create anew session named emm-scraper with some nice settings do
+$ tmux -2 -u new-session -A -s emm-scraper
+
+$ tmux list-session
+emm-scraper: 1 windows (created Wed Jul 15 13:16:50 2020) [204x52]
+
 # attach to a session it is session numbered 0 here
 
 ubuntu@ip-xxx-xx-xx-xxx:~$ tmux attach -t 0
+
+# attach to a session it is session named emm-scraper here
+
+ubuntu@ip-xxx-xx-xx-xxx:~$ tmux attach -t emm-scraper
 
 # Note all tmux commands are preceded by ctrl-b, where ctrl-b is <ctrl> ans 'b' pressed together)
 
