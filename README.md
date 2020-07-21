@@ -97,6 +97,12 @@ Type :help for more information.
 scala>
 ```
 
+You can pass extra arguments to spark-shell. For example, to set file-encoding to utf-8, do:
+
+```
+spark-shell --conf "spark.driver.extraJavaOptions=-Dfile.encoding=utf-8"
+```
+
 # Stopping or starting the container
 
 When you want to stop or start the container just do `docker stop spark-gdelt` or `docker start spark-gdelt` and then `docker exec -it spark-gdelt /bin/bash` to get inside the running container.
