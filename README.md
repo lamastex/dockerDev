@@ -15,11 +15,18 @@ include:
   - https://github.com/lamastex/spark-gdelt 
   - https://github.com/lamastex/spark-trend-calculus
 
-- Python: with `docker pull lamastex/python-findata`
+- Python: 
 
-  - https://github.com/lamastex/FX-1-Minute-Data
-  - https://github.com/lamastex/yfinance
-  - etc.
+  - with `docker pull lamastex/python-findata`
+
+    - https://github.com/lamastex/FX-1-Minute-Data
+    - https://github.com/lamastex/yfinance
+    - etc.
+  
+  - with `docker pull lamastex/python-twarc`
+
+    - [twarc](https://github.com/DocNow/twarc)
+    - [mep](https://github.com/mep/py)
 
 - R: with `docker pull lamastex/r-base-rvest`
 
@@ -167,7 +174,7 @@ Note that if you do not use `--rm` flag then the docker container will not be re
 
 # Python docker dev environment
 
-This `Dockerfile-py` is for python dev environemnt for the following packages:
+This `python-findata.Dockerfile` is for python dev environemnt for the following packages:
 
 - yfinance
 - histdata
@@ -179,10 +186,32 @@ docker pull lamastex/python-findata
 docker run --rm  -it --mount type=bind,source=${PWD},destination=/root/GIT lamastex/python-findata /bin/bash
 ```
 
-To Build:
+This `python-twarc.Dockerfile` is for python dev environemnt for the following packages:
+
+- [twarc](https://github.com/DocNow/twarc)
+- [mep](https://github.com/lamastex/mep/py)
+
+To Use:
+
+In interactive mode after starting in daemon mode: 
+
+```
+docker pull lamastex/python-twarc:latest
+docker run --rm -d -it --name=mep-pytwarc --mount type=bind,source=${PWD},destination=/root/GIT lamastex/python-twarc:latest
+$ docker exec -it mep-pytwarc /bin/bash
+```
+
+To Build such docker containers:
 
 ```
 docker build -t lamastex/python-findata -f python-findata.Dockerfile .
+docker build -t lamastex/python-twarc -f python-twarc.Dockerfile .
+```
+
+To push them to docker Hub so they cna be pulled:
+
+```
+docker push lamastex/python-twarc:latest
 ```
 
 
