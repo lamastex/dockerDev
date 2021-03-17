@@ -26,7 +26,7 @@ include:
   - with `docker pull lamastex/python-twarc`
 
     - [twarc](https://github.com/DocNow/twarc)
-    - [mep](https://github.com/mep/py)
+    - [mep/py/](https://github.com/lamastex/mep/)
 
 - R: with `docker pull lamastex/r-base-rvest`
 
@@ -189,7 +189,7 @@ docker run --rm  -it --mount type=bind,source=${PWD},destination=/root/GIT lamas
 This `python-twarc.Dockerfile` is for python dev environemnt for the following packages:
 
 - [twarc](https://github.com/DocNow/twarc)
-- [mep](https://github.com/lamastex/mep/py)
+- [mep/py/](https://github.com/lamastex/mep/)
 
 To Use:
 
