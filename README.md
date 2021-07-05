@@ -9,7 +9,10 @@ Some concrete open-source projects using these docker containers that are aviala
 
 include:
 
-- Spark/Scala: with `docker pull lamastex/dockerdev`
+For Spark 3.x use tag `latest` and for Spark 2.x use tag `spark2x`:
+
+- Spark/Scala: with `docker pull lamastex/dockerdev:latest`
+- Spark/Scala: with `docker pull lamastex/dockerdev:spark2x`
 
   - https://github.com/aamend/spark-gdelt 
   - https://github.com/lamastex/spark-gdelt 
@@ -32,11 +35,22 @@ include:
 
   - https://github.com/lamastex/emm-newsbrief-rvest
 
-## Build
+## Build latest from Dockerfile
+
+Currently Dockerfile is for Spark 3.x.
+
 
 ```
 docker build -t lamastex/dockerdev:latest .
 ```
+
+To build and push to dockerhub the Spark 2.x compliant image built from `spark2x.Dockerfile` do:
+
+```
+docker build -t lamastex/dockerdev:spark2x -f spark2x.Dockerfile .
+docker push lamastex/dockerdev:spark2x
+```
+
 ## Run
 
 Run a docker container for the project as daemon and execute into it with bash.

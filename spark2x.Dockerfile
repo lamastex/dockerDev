@@ -5,8 +5,8 @@ WORKDIR /root
 # Setting required environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-ENV SPARK_HOME=/root/spark-3.1.2-bin-hadoop3.2
-ENV MAVEN_HOME=/root/apache-maven-3.8.1
+ENV SPARK_HOME=/root/spark-2.4.4-bin-hadoop2.7
+ENV MAVEN_HOME=/root/apache-maven-3.6.3
 ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$MAVEN_HOME/bin
 
 # Installing required and useful packages from repositories
@@ -22,34 +22,33 @@ RUN apt update && apt install -y \
     unzip
 
 # Downloading and unpacking Apache Spark
-RUN wget https://ftpmirror1.infania.net/mirror/apache/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz && \
-    tar -xzf spark-3.1.2-bin-hadoop3.2.tgz && \
-    rm spark-3.1.2-bin-hadoop3.2.tgz
+RUN wget https://archive.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz && \
+    tar -xzf spark-2.4.4-bin-hadoop2.7.tgz && \
+    rm spark-2.4.4-bin-hadoop2.7.tgz
 
 # Downloading graphframes jar
-RUN cd $SPARK_HOME/jars && wget https://repos.spark-packages.org/graphframes/graphframes/0.8.1-spark3.0-s_2.12/graphframes-0.8.1-spark3.0-s_2.12.jar 
+RUN cd $SPARK_HOME/jars && wget http://dl.bintray.com/spark-packages/maven/graphframes/graphframes/0.7.0-spark2.4-s_2.11/graphframes-0.7.0-spark2.4-s_2.11.jar
 
 # Downloading delta-core jar
-RUN cd $SPARK_HOME/jars && wget https://repo1.maven.org/maven2/io/delta/delta-core_2.12/0.1.0/delta-core_2.12-0.1.0.jar 
+RUN cd $SPARK_HOME/jars && wget https://repo1.maven.org/maven2/io/delta/delta-core_2.11/0.5.0/delta-core_2.11-0.5.0.jar
 
 # Downloading scalacheck jar
-RUN cd $SPARK_HOME/jars && wget https://repo1.maven.org/maven2/org/scalacheck/scalacheck_2.12/1.15.4/scalacheck_2.12-1.15.4.jar
+RUN cd $SPARK_HOME/jars && wget https://repo1.maven.org/maven2/org/scalacheck/scalacheck_2.11/1.13.5/scalacheck_2.11-1.13.5.jar
 
 # Downloading scala-logging jars
 RUN cd $SPARK_HOME/jars && \
-    wget https://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging_2.12/3.9.4/scala-logging_2.12-3.9.4.jar 
-# The following two are not available for 2.12 - perhaps wrapped-up now?
-#    wget https://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-api_2.11/2.1.2/scala-logging-api_2.11-2.1.2.jar && \
-#    wget https://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-slf4j_2.11/2.1.2/scala-logging-slf4j_2.11-2.1.2.jar
+    wget https://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging_2.11/3.9.2/scala-logging_2.11-3.9.2.jar && \
+    wget https://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-api_2.11/2.1.2/scala-logging-api_2.11-2.1.2.jar && \
+    wget https://repo1.maven.org/maven2/com/typesafe/scala-logging/scala-logging-slf4j_2.11/2.1.2/scala-logging-slf4j_2.11-2.1.2.jar
 
 # Downloading scalatest jar
-RUN cd $SPARK_HOME/jars && wget https://repo1.maven.org/maven2/org/scalatest/scalatest_2.12/3.2.9/scalatest_2.12-3.2.9.jar
+RUN cd $SPARK_HOME/jars && wget https://repo1.maven.org/maven2/org/scalatest/scalatest_2.11/3.0.3/scalatest_2.11-3.0.3.jar
 
 # Downloading Maven
 
-RUN wget https://ftpmirror1.infania.net/mirror/apache/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz && \
-    tar -xzf apache-maven-3.8.1-bin.tar.gz && \
-    rm apache-maven-3.8.1-bin.tar.gz
+RUN wget http://apache.mirrors.spacedump.net/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz && \
+    tar -xzf apache-maven-3.6.3-bin.tar.gz && \
+    rm apache-maven-3.6.3-bin.tar.gz
 
 # Installing ImageMagick
 
