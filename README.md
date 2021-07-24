@@ -1,4 +1,5 @@
 # dockerDev
+
 Dockerized Development Environment for Spark+Scala+mvn/sbt+..., python, and R for specific open-source projects.
 
 This is currently being developed for various projects involving Spark, Scala, R, Python, etc.
@@ -9,9 +10,9 @@ Some concrete open-source projects using these docker containers that are aviala
 
 include:
 
-For Spark 3.x use tag `latest` and for Spark 2.x use tag `spark2x`:
+For Spark 3.x use tag `spark3x` and for Spark 2.x use tag `spark2x`:
 
-- Spark/Scala: with `docker pull lamastex/dockerdev:latest`
+- Spark/Scala: with `docker pull lamastex/dockerdev:spark3x`
 - Spark/Scala: with `docker pull lamastex/dockerdev:spark2x`
 
   - https://github.com/aamend/spark-gdelt 
@@ -35,9 +36,14 @@ For Spark 3.x use tag `latest` and for Spark 2.x use tag `spark2x`:
 
   - https://github.com/lamastex/emm-newsbrief-rvest
 
+- when multi-language development is needed just start `FROM` a given container and `RUN` as needed:
+
+  - For Spark/Scala 3.x with Python 3.x for twarc: `docker pull lamastex/dockerdev:spark3x-py3` built from `spark3x-py3.Dockerfile`.
+  - The hull of all development environments will have the `latest` tag. Currently, `lamastex/dockerdev:latest` is `lamastex/dockerdev:spark3x-py3`
+
 ## Build latest from Dockerfile
 
-Currently Dockerfile is for Spark 3.x.
+Currently Dockerfile is for Spark 3.x. with Python 3.x for twarc.
 
 
 ```
