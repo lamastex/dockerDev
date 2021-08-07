@@ -1,0 +1,14 @@
+services:
+    selenium:
+      image: selenium/standalone-chrome
+      shm_size: 2gb
+      ports:
+        - "4444:4444"
+    scraper:
+      image: albertnilsson/rselenium
+      entrypoint: Rscript /root/scrape_r.R /root/header.csv
+      volumes:
+        - .:/root
+      depends_on:
+        - selenium
+  
