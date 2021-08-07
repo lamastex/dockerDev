@@ -3,7 +3,7 @@ Example of how to use docker-compose to dockerize webscraping with Rselenium. In
 - The headless webdriver we want to use
 - The docker-compose file
 - The remote server adress for the driver.
-This example uses image [selenium/standalone-chrome](https://hub.docker.com/r/selenium/standalone-chrome) for the Headless Chrome Webdriver, the [albertnilsson/rselenium](https://hub.docker.com/repository/docker/albertnilsson/rselenium) for the actual scraping and we will scrape the header for the the following web page: [https://www.r-project.org/about.html](https://www.r-project.org/about.html).
+This example uses image [selenium/standalone-chrome](https://hub.docker.com/r/selenium/standalone-chrome) for the Headless Chrome Webdriver, the [albertnilsson/rselenium](https://hub.docker.com/r/albertnilsson/rvest) for the actual scraping and we will scrape the header for the the following web page: [https://www.r-project.org/about.html](https://www.r-project.org/about.html).
 
 The first thing we will do is pull the images, do:
 * `docker pull albertnilsson/rselenium`
