@@ -19,7 +19,7 @@ Next we will have to specify the [docker-compose.yml](https://docs.docker.com/co
         - "4444:4444"
     scraper:
       image: albertnilsson/rselenium
-      entrypoint: Rscript /root/scrape_r.R /root/tmp_urls.csv
+      entrypoint: Rscript /root/scrape_r.R /root/header.csv
       volumes:
         - .:/root
       depends_on:
@@ -31,4 +31,4 @@ This specifys that we have two services selenium and scraper.
 The important to notice from the first is that we set **shm_size: 2gb** which specifies the shared memory. The reason for this is that if we don't increase the shared memory the driver crashes. For the scraper container we notice that we have **depends_on selenium**. This means that when when we do `docker-compose` up the selenium container will start before the scraper.
 
 
-Now to the script that actually does the scraping. For the remote driver `remoteDriver(remoteServerAddr ="selenium",browserName= "chrome", port=4444L)` we have to specify `remoteServerAddr ="selenium"` since the default is localhost. Now if we do `docker-compose up --abort-on-container-exit` the containers will start, the script scrape_r.R will run, write the header of the web page to head.csv and then the containers will shutdown.
+Now to the script that actually does the scraping. For the remote driver `remoteDriver(remoteServerAddr ="selenium",browserName= "chrome", port=4444L)` we have to specify `remoteServerAddr ="selenium"` since the default is localhost. Now if we do `docker-compose up --abort-on-container-exit` the containers will start, the script scrape_r.R will run, write the header of the web page to header.csv and then the containers will shutdown.
