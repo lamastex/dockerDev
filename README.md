@@ -36,6 +36,10 @@ For Spark 3.x use tag `spark3x` and for Spark 2.x use tag `spark2x`:
 
   - https://github.com/lamastex/emm-newsbrief-rvest
 
+- Haskell: with `docker pull lamastex/haskell-pinot`
+
+  - https://gitlab.com/tilowiklund/pinot
+
 - when multi-language development is needed just start `FROM` a given container and `RUN` as needed:
 
   - For Spark/Scala 3.x with Python 3.x for twarc: `docker pull lamastex/dockerdev:spark3x-py3` built from `spark3x-py3.Dockerfile`.
@@ -234,6 +238,15 @@ To push them to docker Hub so they cna be pulled:
 docker push lamastex/python-twarc:latest
 ```
 
+# Haskell dockerDev environment
+
+```
+docker build -t lamastex/haskell-pinot:latest -f haskell-pinot.Dockerfile .
+docker push lamastex/haskell-pinot
+docker pull lamastex/haskell-pinot
+docker run --rm -d -it --name=haskell-pinot --mount type=bind,source=${PWD},destination=/root/GIT lamastex/haskell-pinot:latest
+docker exec -it haskell-pinot /bin/bash
+```
 
 # Using tmux is recommended
 
