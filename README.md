@@ -40,6 +40,10 @@ For Spark 3.x use tag `spark3x` and for Spark 2.x use tag `spark2x`:
 
   - https://gitlab.com/tilowiklund/pinot
 
+- Rust: with `docker pull lamastex/rust-mdbook`
+
+  - https:github.com/lamastex/scalable-data-science/tree/master/books#mdbook
+
 - when multi-language development is needed just start `FROM` a given container and `RUN` as needed:
 
   - For Spark/Scala 3.x with Python 3.x for twarc: `docker pull lamastex/dockerdev:spark3x-py3` built from `spark3x-py3.Dockerfile`.
@@ -280,6 +284,58 @@ Usage: pinot (-f|--from FROM) (-t|--to TO) INPUTS... [-o|--out OUTPUT]
 root@d8abf881e058:~/tilowiklund/pinot# 
 
 ```
+
+# Rust dockerDev environment for mdbook
+
+Quick commands to build, push, pull (only need to be done once) and run and execute with local directory binds.
+
+```
+$ pushd ~/all/git/lamastex/dockerDev/
+~/all/git/lamastex/dockerDev ~/all/git
+$ vim rust-mdbook.Dockerfile 
+$ docker build -t lamastex/rust-mdbook:latest -f rust-mdbook.Dockerfile .
+[+] Building 224.4s (9/9) FINISHED                                                                                                
+ => [internal] load build definition from rust-mdbook.Dockerfile                                                             0.0s
+...
+ => => naming to docker.io/lamastex/rust-mdbook:latest                                                                       0.0s 
+$ popd                                                                                         
+~/all/git                                                                                                                         
+$ docker run --rm -d -it --name=rust-mdbook  --mount type=bind,source=${PWD},destination=/root/GIT lamastex/rust-mdbook:latest
+8b77657329a8aa4e50583d85dcbb893ac684c5256b62cbd6267f7ae053c3c31e
+$ docker ps
+CONTAINER ID   IMAGE                           COMMAND   CREATED         STATUS         PORTS     NAMES
+8b77657329a8   lamastex/rust-mdbook:latest     "bash"    5 seconds ago   Up 4 seconds             rust-mdbook
+d8abf881e058   lamastex/haskell-pinot:latest   "ghci"    2 hours ago     Up 2 hours               haskell-pinot
+$ docker exec -it rust-mdbook /bin/bash
+root@8b77657329a8:~# rustc --version
+rustc 1.57.0 (f1edd0429 2021-11-29)
+root@8b77657329a8:~# mdbook -h
+mdbook v0.4.14
+Mathieu David <mathieudavid@mathieudavid.org>
+Creates a book from markdown files
+
+USAGE:
+    mdbook [SUBCOMMAND]
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+SUBCOMMANDS:
+    build          Builds a book from its markdown files
+    clean          Deletes a built book
+    completions    Generate shell completions for your shell to stdout
+    help           Prints this message or the help of the given subcommand(s)
+    init           Creates the boilerplate structure and files for a new book
+    serve          Serves a book at http://localhost:3000, and rebuilds it on changes
+    test           Tests that a book's Rust code samples compile
+    watch          Watches a book's files and rebuilds it on changes
+
+For more information about a specific command, try `mdbook <command> --help`
+The source code for mdBook is available at: https://github.com/rust-lang/mdBook
+root@8b77657329a8:~# 
+```
+
 
 # Using tmux is recommended
 
