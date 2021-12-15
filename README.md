@@ -54,9 +54,18 @@ Currently `Dockerfile` is for Spark 3.x. with Python 3 for twarc.
 docker build -t lamastex/dockerdev:latest .
 ```
 
-To build and push to dockerhub the Spark 2.x compliant image built from `spark2x.Dockerfile` do:
+To build and push to dockerhub
+
+- first, [create repos in dockerhub](https://docs.docker.com/docker-hub/) 
+- second, follow the next commands for pushing the Spark 2.x compliant image built from `spark2x.Dockerfile` into dockerhub:
 
 ```
+docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: dockerUserName
+Password: 
+Login Succeeded
+
 docker build -t lamastex/dockerdev:spark2x -f spark2x.Dockerfile .
 docker push lamastex/dockerdev:spark2x
 ```
@@ -161,7 +170,7 @@ distributed-histogram-trees            magellan             scalable-data-scienc
 $ docker ps
 CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS              PORTS                    NAMES
 bb0d1714cde9        lamastex/dockerdev:latest   "/bin/bash"         23 minutes ago      Up 23 minutes       0.0.0.0:4040->4040/tcp   spark-gdelt
-raaz@raaz-ThinkPad-T480:~/all/git$ docker ps
+$ docker ps
 CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS              PORTS                    NAMES
 bb0d1714cde9        lamastex/dockerdev:latest   "/bin/bash"         27 minutes ago      Up 27 minutes       0.0.0.0:4040->4040/tcp   spark-gdelt
 
@@ -240,12 +249,36 @@ docker push lamastex/python-twarc:latest
 
 # Haskell dockerDev environment
 
+Quick commands to build, push, pull (only need to be done once) and run and execute with local directory binds.
+
 ```
 docker build -t lamastex/haskell-pinot:latest -f haskell-pinot.Dockerfile .
 docker push lamastex/haskell-pinot
 docker pull lamastex/haskell-pinot
 docker run --rm -d -it --name=haskell-pinot --mount type=bind,source=${PWD},destination=/root/GIT lamastex/haskell-pinot:latest
 docker exec -it haskell-pinot /bin/bash
+```
+
+Go to the right directory with local git repos and launch docker container for haskell-pinot work.
+
+```
+$ cd ~/all/git/
+$ docker run --rm -d -it --name=haskell-pinot --mount type=bind,source=${PWD},destination=/root/GIT lamastex/haskell-pinot:latest
+d8abf881e058d46abd69157a33441e3fbf95ef28e7d9f18252cff79949d0f05f
+$ docker exec -it haskell-pinot /bin/bash
+root@d8abf881e058:~# echo $PINOT_DIR
+/root/tilowiklund/pinot
+root@d8abf881e058:~# cd $PINOT_DIR
+root@d8abf881e058:~/tilowiklund/pinot# pwd
+/root/tilowiklund/pinot
+root@d8abf881e058:~/tilowiklund/pinot# stack exec pinot
+Missing: (-f|--from FROM) (-t|--to TO) INPUTS...
+
+Usage: pinot (-f|--from FROM) (-t|--to TO) INPUTS... [-o|--out OUTPUT] 
+             [-c|--keep-going] [-R|--extra-resource-path ARG]
+  Convert between different notebook formats
+root@d8abf881e058:~/tilowiklund/pinot# 
+
 ```
 
 # Using tmux is recommended
