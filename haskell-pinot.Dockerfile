@@ -10,7 +10,7 @@ RUN apt-get update && \
 RUN mkdir -p /root/tilowiklund && \
     cd /root/tilowiklund && \
     git clone https://gitlab.com/tilowiklund/pinot.git && \ 
-    cd pinot && \
-    stack init && stack setup --install-ghc && stack build
+    cd /root/tilowiklund/pinot && \
+    stack setup --install-ghc && stack build
 
 ENV PINOT_DIR="/root/tilowiklund/pinot"
