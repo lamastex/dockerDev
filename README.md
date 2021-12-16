@@ -84,7 +84,7 @@ Run a docker container for the project as daemon and execute into it with bash.
 $ pwd
 ~/all/git/
 
-$ docker run --rm -d -it --name=spark-gdelt --mount type=bind,source=${PWD},destination=/root/GIT -p 4040:4040 lamastex/dockerdev:latest
+$ docker run --rm -d -it --name=spark-gdelt --mount type=bind,source=${HOME}/all/git,destination=/root/GIT -p 4040:4040 lamastex/dockerdev:latest
 
 $ docker ps
 CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS              PORTS               NAMES
@@ -193,7 +193,7 @@ hello-world          latest                 bf756fb1ae65        6 months ago    
 $ docker kill spark-gdelt
 spark-gdelt
 
-$ docker run --rm -it --mount type=bind,source=${PWD},destination=/root/GIT -p 4040:4040 lamastex/dockerdev:20200407-spark-gdelt
+$ docker run --rm -it --mount type=bind,source=${HOME}/all/git,destination=/root/GIT -p 4040:4040 lamastex/dockerdev:20200407-spark-gdelt
 
 root@9f2b5d6cb084:~# cd GIT/spark-gdelt/
 
@@ -206,7 +206,7 @@ This is useful sometimes. Alternatively, you can run the container in daemon mod
 If you want to launch in deamon mode with a name and execute into the same running container with  a name then do:
 
 ```
-docker run --rm -it -d --name=20200407-spark-gdelt --mount type=bind,source=${PWD},destination=/root/GIT -p 4040:4040 lamastex/dockerdev:20200407-spark-gdelt
+docker run --rm -it -d --name=20200407-spark-gdelt --mount type=bind,source=${HOME}/all/git,destination=/root/GIT -p 4040:4040 lamastex/dockerdev:20200407-spark-gdelt
 ```
 
 Note that if you do not use `--rm` flag then the docker container will not be removed when you exit the container.
@@ -222,7 +222,7 @@ To Use:
 
 ```
 docker pull lamastex/python-findata
-docker run --rm  -it --mount type=bind,source=${PWD},destination=/root/GIT lamastex/python-findata /bin/bash
+docker run --rm  -it --mount type=bind,source=${HOME}/all/git,destination=/root/GIT lamastex/python-findata /bin/bash
 ```
 
 This `python-twarc.Dockerfile` is for python dev environemnt for the following packages:
@@ -236,7 +236,7 @@ In interactive mode after starting in daemon mode:
 
 ```
 docker pull lamastex/python-twarc:latest
-docker run --rm -d -it --name=mep-pytwarc --mount type=bind,source=${PWD},destination=/root/GIT lamastex/python-twarc:latest
+docker run --rm -d -it --name=mep-pytwarc --mount type=bind,source=${HOME}/all/git,destination=/root/GIT lamastex/python-twarc:latest
 $ docker exec -it mep-pytwarc /bin/bash
 ```
 
@@ -261,7 +261,7 @@ Quick commands to build, push, pull (only need to be done once) and run and exec
 docker build -t lamastex/haskell-pinot:latest -f haskell-pinot.Dockerfile .
 docker push lamastex/haskell-pinot
 docker pull lamastex/haskell-pinot
-docker run --rm -d -it --name=haskell-pinot --mount type=bind,source=${PWD},destination=/root/GIT lamastex/haskell-pinot:latest
+docker run --rm -d -it --name=haskell-pinot --mount type=bind,source=${HOME}/all/git,destination=/root/GIT lamastex/haskell-pinot:latest
 docker exec -it haskell-pinot /bin/bash
 ```
 
@@ -269,7 +269,7 @@ Go to the right directory with local git repos and launch docker container for h
 
 ```
 $ cd ~/all/git/
-$ docker run --rm -d -it --name=haskell-pinot --mount type=bind,source=${PWD},destination=/root/GIT lamastex/haskell-pinot:latest
+$ docker run --rm -d -it --name=haskell-pinot --mount type=bind,source=${HOME}/all/git,destination=/root/GIT lamastex/haskell-pinot:latest
 d8abf881e058d46abd69157a33441e3fbf95ef28e7d9f18252cff79949d0f05f
 $ docker exec -it haskell-pinot /bin/bash
 root@d8abf881e058:~# echo $PINOT_DIR
@@ -302,7 +302,7 @@ $ docker build -t lamastex/rust-mdbook:latest -f rust-mdbook.Dockerfile .
  => => naming to docker.io/lamastex/rust-mdbook:latest                                                                       0.0s 
 $ popd                                                                                         
 ~/all/git                                                                                                                         
-$ docker run --rm -d -it --name=rust-mdbook  --mount type=bind,source=${PWD},destination=/root/GIT lamastex/rust-mdbook:latest
+$ docker run --rm -d -it --name=rust-mdbook  --mount type=bind,source=${HOME}/all/git,destination=/root/GIT lamastex/rust-mdbook:latest
 8b77657329a8aa4e50583d85dcbb893ac684c5256b62cbd6267f7ae053c3c31e
 $ docker ps
 CONTAINER ID   IMAGE                           COMMAND   CREATED         STATUS         PORTS     NAMES
