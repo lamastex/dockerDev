@@ -347,6 +347,16 @@ docker login
 docker push lamastex/python-dbcli:latest
 ```
 
+Make the config file for different databricks profiles (after creating access tokens in each databricks Workspace):
+
+```
+databricks configure --token ## this creates the [DEFAULT] profile
+databricks configure --token --profile dbua-us-west
+databricks configure --token --profile dbua-eu-west-0
+databricks configure --token --profile dbua-eu-west-1
+cat ~/.databrickscfg 
+```
+
 How to start in daemon mode and execute into it...
 
 ```
@@ -355,6 +365,15 @@ docker run --rm -d -it --name=python-dbcli --mount type=bind,readonly,source=${H
 
 docker exec -it python-dbcli /bin/bash
 
+root@01dc59bc48d2:~# history
+    1  pwd
+    2  ls GIT/
+    3  cat ~/.databrickscfg 
+    4  databricks workspace list --profile dbua-us-west
+    5  databricks workspace list --profile dbua-eu-west-0
+    6  databricks workspace list --profile dbua-eu-west-1
+    7  history
+root@01dc59bc48d2:~# exit
 ```
 
 # Using tmux is recommended
