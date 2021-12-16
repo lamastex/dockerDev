@@ -44,6 +44,8 @@ For Spark 3.x use tag `spark3x` and for Spark 2.x use tag `spark2x`:
 
   - https:github.com/lamastex/scalable-data-science/tree/master/books#mdbook
 
+- databricksCLI: with `docker pull lamastex/python-dbcli`
+
 - when multi-language development is needed just start `FROM` a given container and `RUN` as needed:
 
   - For Spark/Scala 3.x with Python 3.x for twarc: `docker pull lamastex/dockerdev:spark3x-py3` built from `spark3x-py3.Dockerfile`.
@@ -335,7 +337,25 @@ For more information about a specific command, try `mdbook <command> --help`
 The source code for mdBook is available at: https://github.com/rust-lang/mdBook
 root@8b77657329a8:~# 
 ```
+# databricks-CLI dockerDev env
 
+To build and push to dockerhub.... Need to do this only once, periodically.
+
+```
+docker build -t lamastex/python-dbcli:latest -f python-dbcli.Dockerfile .
+docker login
+docker push lamastex/python-dbcli:latest
+```
+
+How to start in daemon mode and execute into it...
+
+```
+docker pull lamastex/python-dbcli:latest
+docker run --rm -d -it --name=python-dbcli --mount type=bind,readonly,source=${HOME}/.databrickscfg,destination=/root/.databrickscfg --mount type=bind,source=${HOME}/all/git,destination=/root/GIT lamastex/python-dbcli:latest
+
+docker exec -it python-dbcli /bin/bash
+
+```
 
 # Using tmux is recommended
 
