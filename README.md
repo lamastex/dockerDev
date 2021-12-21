@@ -376,6 +376,16 @@ root@01dc59bc48d2:~# history
 root@01dc59bc48d2:~# exit
 ```
 
+# For docker/compose of Spark w/ hadoop,zeppelin,jupyter, etc.
+
+This needs to be updated for latest Spark ecosystem.
+
+See [https://github.com/lamastex/scalable-data-science/tree/master/_sds/basics/infrastructure/docker/docker-sds](https://github.com/lamastex/scalable-data-science/tree/master/_sds/basics/infrastructure/docker/docker-sds).
+
+Starting from:
+
+- [https://lamastex.github.io/scalable-data-science/sds/basics/infrastructure/local/](https://lamastex.github.io/scalable-data-science/sds/basics/infrastructure/local/)
+
 # Using tmux is recommended
 
 When connecting via ssh and working in a running ec2 instance or in a local Linux/Mac machine, it is best to use tmux.
