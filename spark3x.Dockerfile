@@ -6,7 +6,7 @@ WORKDIR /root
 ENV DEBIAN_FRONTEND=noninteractive
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV SPARK_HOME=/root/spark-3.1.2-bin-hadoop3.2
-ENV MAVEN_HOME=/root/apache-maven-3.8.1
+ENV MAVEN_HOME=/root/apache-maven-3.8.4
 ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$MAVEN_HOME/bin
 
 # Installing required and useful packages from repositories
@@ -22,7 +22,7 @@ RUN apt update && apt install -y \
     unzip
 
 # Downloading and unpacking Apache Spark
-RUN wget https://ftpmirror1.infania.net/mirror/apache/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz && \
+RUN wget https://downloads.apache.org/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz && \
     tar -xzf spark-3.1.2-bin-hadoop3.2.tgz && \
     rm spark-3.1.2-bin-hadoop3.2.tgz
 
@@ -47,9 +47,9 @@ RUN cd $SPARK_HOME/jars && wget https://repo1.maven.org/maven2/org/scalatest/sca
 
 # Downloading Maven
 
-RUN wget https://ftpmirror1.infania.net/mirror/apache/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz && \
-    tar -xzf apache-maven-3.8.1-bin.tar.gz && \
-    rm apache-maven-3.8.1-bin.tar.gz
+RUN wget https://downloads.apache.org/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.tar.gz && \
+    tar -xzf apache-maven-3.8.4-bin.tar.gz && \
+    rm apache-maven-3.8.4-bin.tar.gz
 
 # Installing ImageMagick
 
@@ -63,12 +63,11 @@ RUN ln -s /usr/bin/identify /usr/local/bin/identify
 EXPOSE 4040
 
 # Installing SBT
-RUN apt install -y gnupg && \
-    echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list && \
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823 && \
-    apt-get update && \
-    apt-get install sbt && \
-    sbt about
+RUN apt-get update && apt-get install apt-transport-https curl gnupg -yqq && \ 
+    echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | tee /etc/apt/sources.list.d/sbt.list && \
+    echo "deb https://repo.scala-sbt.org/scalasbt/debian /" | tee /etc/apt/sources.list.d/sbt_old.list && \
+    curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" |  gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/scalasbt-release.gpg --import && \
+    chmod 644 /etc/apt/trusted.gpg.d/scalasbt-release.gpg && apt-get update && apt-get install sbt && sbt about
 
 # Generating gpg keys
 RUN echo "Key-Type: default\nSubkey-Type: default\nName-Real: testing\nName-Comment: This key is for testing\nName-Email: testing@testing.test\nExpire-Date: 0\n%no-protection\n%commit" > gpgBatch.txt

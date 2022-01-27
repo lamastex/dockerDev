@@ -47,6 +47,7 @@ For Spark 3.x use tag `spark3x` and for Spark 2.x use tag `spark2x`:
 - when multi-language development is needed just start `FROM` a given container and `RUN` as needed:
 
   - For Spark/Scala 3.x with Python 3.x for twarc: `docker pull lamastex/dockerdev:spark3x-py3` built from `spark3x-py3.Dockerfile`.
+  - For Spark/Scala 3.x with Python 3.x for magellan: `docker pull lamastex/dockerdev:spark3x-py3` built from `spark3x-py3.Dockerfile`.
   - The largest union of all development environments will have the `latest` tag. Currently, `lamastex/dockerdev:latest` is `lamastex/dockerdev:spark3x-py3`
 
 ## Build latest from Dockerfile
