@@ -44,6 +44,8 @@ For Spark 3.x use tag `spark3x` and for Spark 2.x use tag `spark2x`:
 
   - https:github.com/lamastex/scalable-data-science/tree/master/books#mdbook
 
+- databricksCLI: with `docker pull lamastex/python-dbcli`
+
 - when multi-language development is needed just start `FROM` a given container and `RUN` as needed:
 
   - For Spark/Scala 3.x with Python 3.x for twarc: `docker pull lamastex/dockerdev:spark3x-py3` built from `spark3x-py3.Dockerfile`.
@@ -83,7 +85,7 @@ Run a docker container for the project as daemon and execute into it with bash.
 $ pwd
 ~/all/git/
 
-$ docker run --rm -d -it --name=spark-gdelt --mount type=bind,source=${PWD},destination=/root/GIT -p 4040:4040 lamastex/dockerdev:latest
+$ docker run --rm -d -it --name=spark-gdelt --mount type=bind,source=${HOME}/all/git,destination=/root/GIT -p 4040:4040 lamastex/dockerdev:latest
 
 $ docker ps
 CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS              PORTS               NAMES
@@ -192,7 +194,7 @@ hello-world          latest                 bf756fb1ae65        6 months ago    
 $ docker kill spark-gdelt
 spark-gdelt
 
-$ docker run --rm -it --mount type=bind,source=${PWD},destination=/root/GIT -p 4040:4040 lamastex/dockerdev:20200407-spark-gdelt
+$ docker run --rm -it --mount type=bind,source=${HOME}/all/git,destination=/root/GIT -p 4040:4040 lamastex/dockerdev:20200407-spark-gdelt
 
 root@9f2b5d6cb084:~# cd GIT/spark-gdelt/
 
@@ -205,7 +207,7 @@ This is useful sometimes. Alternatively, you can run the container in daemon mod
 If you want to launch in deamon mode with a name and execute into the same running container with  a name then do:
 
 ```
-docker run --rm -it -d --name=20200407-spark-gdelt --mount type=bind,source=${PWD},destination=/root/GIT -p 4040:4040 lamastex/dockerdev:20200407-spark-gdelt
+docker run --rm -it -d --name=20200407-spark-gdelt --mount type=bind,source=${HOME}/all/git,destination=/root/GIT -p 4040:4040 lamastex/dockerdev:20200407-spark-gdelt
 ```
 
 Note that if you do not use `--rm` flag then the docker container will not be removed when you exit the container.
@@ -221,7 +223,7 @@ To Use:
 
 ```
 docker pull lamastex/python-findata
-docker run --rm  -it --mount type=bind,source=${PWD},destination=/root/GIT lamastex/python-findata /bin/bash
+docker run --rm  -it --mount type=bind,source=${HOME}/all/git,destination=/root/GIT lamastex/python-findata /bin/bash
 ```
 
 This `python-twarc.Dockerfile` is for python dev environemnt for the following packages:
@@ -235,7 +237,7 @@ In interactive mode after starting in daemon mode:
 
 ```
 docker pull lamastex/python-twarc:latest
-docker run --rm -d -it --name=mep-pytwarc --mount type=bind,source=${PWD},destination=/root/GIT lamastex/python-twarc:latest
+docker run --rm -d -it --name=mep-pytwarc --mount type=bind,source=${HOME}/all/git,destination=/root/GIT lamastex/python-twarc:latest
 $ docker exec -it mep-pytwarc /bin/bash
 ```
 
@@ -260,7 +262,7 @@ Quick commands to build, push, pull (only need to be done once) and run and exec
 docker build -t lamastex/haskell-pinot:latest -f haskell-pinot.Dockerfile .
 docker push lamastex/haskell-pinot
 docker pull lamastex/haskell-pinot
-docker run --rm -d -it --name=haskell-pinot --mount type=bind,source=${PWD},destination=/root/GIT lamastex/haskell-pinot:latest
+docker run --rm -d -it --name=haskell-pinot --mount type=bind,source=${HOME}/all/git,destination=/root/GIT lamastex/haskell-pinot:latest
 docker exec -it haskell-pinot /bin/bash
 ```
 
@@ -268,7 +270,7 @@ Go to the right directory with local git repos and launch docker container for h
 
 ```
 $ cd ~/all/git/
-$ docker run --rm -d -it --name=haskell-pinot --mount type=bind,source=${PWD},destination=/root/GIT lamastex/haskell-pinot:latest
+$ docker run --rm -d -it --name=haskell-pinot --mount type=bind,source=${HOME}/all/git,destination=/root/GIT lamastex/haskell-pinot:latest
 d8abf881e058d46abd69157a33441e3fbf95ef28e7d9f18252cff79949d0f05f
 $ docker exec -it haskell-pinot /bin/bash
 root@d8abf881e058:~# echo $PINOT_DIR
@@ -301,7 +303,7 @@ $ docker build -t lamastex/rust-mdbook:latest -f rust-mdbook.Dockerfile .
  => => naming to docker.io/lamastex/rust-mdbook:latest                                                                       0.0s 
 $ popd                                                                                         
 ~/all/git                                                                                                                         
-$ docker run --rm -d -it --name=rust-mdbook  --mount type=bind,source=${PWD},destination=/root/GIT lamastex/rust-mdbook:latest
+$ docker run --rm -d -it --name=rust-mdbook  --mount type=bind,source=${HOME}/all/git,destination=/root/GIT lamastex/rust-mdbook:latest
 8b77657329a8aa4e50583d85dcbb893ac684c5256b62cbd6267f7ae053c3c31e
 $ docker ps
 CONTAINER ID   IMAGE                           COMMAND   CREATED         STATUS         PORTS     NAMES
@@ -336,7 +338,54 @@ For more information about a specific command, try `mdbook <command> --help`
 The source code for mdBook is available at: https://github.com/rust-lang/mdBook
 root@8b77657329a8:~# 
 ```
+# databricks-CLI dockerDev env
 
+To build and push to dockerhub.... Need to do this only once, periodically.
+
+```
+docker build -t lamastex/python-dbcli:latest -f python-dbcli.Dockerfile .
+docker login
+docker push lamastex/python-dbcli:latest
+```
+
+Make the config file for different databricks profiles (after creating access tokens in each databricks Workspace):
+
+```
+databricks configure --token ## this creates the [DEFAULT] profile
+databricks configure --token --profile dbua-us-west
+databricks configure --token --profile dbua-eu-west-0
+databricks configure --token --profile dbua-eu-west-1
+cat ~/.databrickscfg 
+```
+
+How to start in daemon mode and execute into it...
+
+```
+docker pull lamastex/python-dbcli:latest
+docker run --rm -d -it --name=python-dbcli --mount type=bind,readonly,source=${HOME}/.databrickscfg,destination=/root/.databrickscfg --mount type=bind,source=${HOME}/all/git,destination=/root/GIT lamastex/python-dbcli:latest
+
+docker exec -it python-dbcli /bin/bash
+
+root@01dc59bc48d2:~# history
+    1  pwd
+    2  ls GIT/
+    3  cat ~/.databrickscfg 
+    4  databricks workspace list --profile dbua-us-west
+    5  databricks workspace list --profile dbua-eu-west-0
+    6  databricks workspace list --profile dbua-eu-west-1
+    7  history
+root@01dc59bc48d2:~# exit
+```
+
+# For docker/compose of Spark w/ hadoop,zeppelin,jupyter, etc.
+
+This needs to be updated for latest Spark ecosystem.
+
+See [https://github.com/lamastex/scalable-data-science/tree/master/_sds/basics/infrastructure/docker/docker-sds](https://github.com/lamastex/scalable-data-science/tree/master/_sds/basics/infrastructure/docker/docker-sds).
+
+Starting from:
+
+- [https://lamastex.github.io/scalable-data-science/sds/basics/infrastructure/local/](https://lamastex.github.io/scalable-data-science/sds/basics/infrastructure/local/)
 
 # Using tmux is recommended
 
