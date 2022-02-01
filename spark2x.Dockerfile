@@ -5,7 +5,7 @@ WORKDIR /root
 # Setting required environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-ENV SPARK_HOME=/root/spark-2.4.4-bin-hadoop2.7
+ENV SPARK_HOME=/root/spark-2.4.5-bin-hadoop2.7
 ENV MAVEN_HOME=/root/apache-maven-3.6.3
 ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin:$MAVEN_HOME/bin
 
@@ -22,9 +22,9 @@ RUN apt update && apt install -y \
     unzip
 
 # Downloading and unpacking Apache Spark
-RUN wget https://archive.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz && \
-    tar -xzf spark-2.4.4-bin-hadoop2.7.tgz && \
-    rm spark-2.4.4-bin-hadoop2.7.tgz
+RUN wget https://archive.apache.org/dist/spark/spark-2.4.5/spark-2.4.5-bin-hadoop2.7.tgz && \
+    tar -xzf spark-2.4.5-bin-hadoop2.7.tgz && \
+    rm spark-2.4.5-bin-hadoop2.7.tgz
 
 # Downloading graphframes jar
 RUN cd $SPARK_HOME/jars && wget https://repos.spark-packages.org/graphframes/graphframes/0.7.0-spark2.4-s_2.11/graphframes-0.7.0-spark2.4-s_2.11.jar
